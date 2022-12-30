@@ -1,0 +1,309 @@
+@charset "UTF-8";
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Caveat&family=Kalam&display=swap')
+	;
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap')
+	;
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300&display=swap')
+	;
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap')
+	;
+	
+.brush {
+	font-family: "Nanum Brush Script", san-serif;
+}
+
+.noto {
+	font-family: "Noto Serif Korean", san-serif;
+}
+
+.gowun {
+	font-family: "Gowun Dodum", san-serif;
+}
+
+.caveat {
+	font-family: "Caveat", san-serif;
+}
+
+.kalam {
+	font-family: "Kalam", san-serif;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.main-container {
+	overflow: hidden;
+}
+
+.main-left {
+	width: 950px;
+	height: 100%;
+	float: left;
+	background-color: #3f3f3f;
+	overflow: hidden;
+}
+
+.main-images {
+	float: left;
+	width: 950px;
+	height: 100%;
+}
+
+.titlebox {
+	position: relative;
+	background-color: #8080ff;
+	width: 950px;
+	height: 500px;
+}
+
+.title1 {
+	font-size: 40px;
+	text-align: center;
+	color: white;
+	text-align: center;
+}
+
+.title2 {
+	text-align: center;
+	color: white;
+}
+
+.title3 {
+	text-align: left;
+	color: white;
+}
+
+#img {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+}
+
+.img1 {
+	float: left;
+	margin: 0;
+	padding: 0;
+	width: 470px;
+	height: 400px;
+	overflow: hidden;
+	margin: 0;
+}
+
+.img2 {
+	width: 480px;
+	height: 400px;
+	overflow: hidden;
+}
+
+.img5 {
+	float: left;
+	width: 600px;
+	height: 400px;
+	overflow: hidden;
+}
+
+.img6 {
+	float: right;
+	width: 350px;
+	height: 400px;
+	overflow: hidden;
+}
+
+.img7 {
+	float: left;
+	width: 310px;
+	height: 400px;
+	overflow: hidden;
+}
+
+.img8 {
+	float: left;
+	width: 310px;
+	height: 400px;
+	overflow: hidden;
+}
+
+.img9 {
+	float: left;
+	width: 330px;
+	height: 400px;
+	overflow: hidden;
+}
+
+.img10 {
+	float: left;
+	width: 950px;
+	height: 650px;
+	overflow: hidden;
+}
+
+.maintext {
+	font-size: 100px;
+	text-align: center;
+	line-height: 50px;
+	margin: 270px;
+}
+
+.main-right {
+	width: 1164px;
+	height: 2500px;
+	float: right;
+	overflow: hidden;
+}
+
+nav ul {
+	float: left;
+	width: 1164px;
+	height: 70px;
+	line-height: 70px;
+	background-color: #171717;
+	overflow: hidden;
+	height: 70px;
+	width: 1300px;
+}
+
+nav ul li {
+	float: left;
+	list-style: none;
+	padding: 0 85px;
+}
+
+.information {
+	margin-top: 150px;
+	margin-left: 60px;
+	margin-right: 60px;
+	line-height: 30px;
+	font-size: 20px;
+	text-align: justify;
+	word-break: break-all;
+}
+
+a {
+	text-decoration: none;
+	color: #fff;
+}
+
+li:hover {
+	cursor: pointer;
+	background-color: #8080ff;
+}
+
+.wrapper {
+	float: left;
+	text-align: center;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 100px;
+}
+
+.apply_title {
+	float: left;
+	padding: 50px;
+	font-size: 40px;
+	text-align: center;
+	width: 270px;
+	height: 500px;
+}
+
+td input {
+	line-height: 20px;
+	font-size: 15px;
+	border: none;
+	width: 450px;
+	height: 50px;
+	text-align: center;
+	padding: 15px;
+	font-size: 15px;
+	line-height: 20px;
+}
+
+.btn {
+	padding: 0.2rem 1rem;
+}
+
+.applytitle {
+	font-size: 30px;
+	margin: 10px;
+	margin-bottom: 60px;
+}
+
+table th td hr {
+	font-size: 20px;
+	margin: 10px;
+}
+
+.song1_div {
+	margin-top: 100px;
+}
+
+.song1 {
+	margin-left: 70px;
+}
+
+.song2 {
+	margin-left: 70px;
+}
+
+.song1_title {
+	text-align: left;
+	font-size: 30px;
+	margin-left: 60px;
+	margin-bottom: 30px;
+}
+
+.song2_title {
+	text-align: left;
+	font-size: 30px;
+	margin-left: 60px;
+	margin-bottom: 30px;
+}
+
+.song1_text {
+	margin-top: 40px;
+	text-align: left;
+	font-size: 20px;
+	margin-left: 60px;
+	margin-right: 60px;
+	line-height: 30px;
+	font-size: 20px;
+	text-align: justify;
+	word-break: break-all;
+}
+
+.song2_text {
+	margin-top: 40px;
+	text-align: left;
+	font-size: 20px;
+	margin-left: 60px;
+	margin-right: 60px;
+	line-height: 30px;
+	font-size: 20px;
+	text-align: justify;
+	word-break: break-all;
+}
+
+.footer {
+	float: right;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	background: #171717;
+	font-size: 23px;
+	color: white;
+}
