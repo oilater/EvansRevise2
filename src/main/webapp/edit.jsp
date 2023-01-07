@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
-
 %>
 <!DOCTYPE html>
 <html>
@@ -26,43 +25,45 @@ request.setCharacterEncoding("UTF-8");
 						WELCOME TO<br> <span style="color: #8080ff;">EVANS
 							TRIO</span>
 					</div>
-					<form name="frm" action="B_insert">
-						<input type="hidden" id="GUBUN" value="insert">
+					<form name="frm" method="post" action="B_update?no=${applicant.no}">
 						<div class="wrapper">
 							<table style="margin: 0 auto">
 								<tr>
-									<td><input type="text" name="name" placeholder="이름을 알려주세요"></td>
+									<td><input type="text" name="name"
+										value="${applicant.name}" placeholder="이름을 알려주세요"></td>
 								</tr>
 								<tr>
-									<td><input type="text" name="age" placeholder="나이를 알려주세요"></td>
+									<td><input type="text" name="age" value="${applicant.age}"
+										placeholder="나이를 알려주세요"></td>
 								</tr>
 								<tr>
 									<td><input type="tel" name="phone"
-										placeholder="번호 좀 알려주세요"></td>
+										value="${applicant.phone}" placeholder="번호 좀 알려주세요"></td>
 								</tr>
 								<tr>
 									<td><input type="text" name="address"
-										placeholder="어디에 사시나요?"></td>
+										value="${applicant.address}" placeholder="어디에 사시나요?"></td>
 								</tr>
 								<tr>
 									<td><input type="text" name="instrument"
-										placeholder="무슨 악기를 연주하시나요?"></td>
+										value="${applicant.instrument}" placeholder="무슨 악기를 연주하시나요?"></td>
 								</tr>
 								<tr>
 									<td><input type="text" name="career"
-										placeholder="연주 경력은 얼마나 되시나요?"></td>
+										value="${applicant.career}" placeholder="연주 경력은 얼마나 되시나요?"></td>
 								</tr>
+								<!--  라디오 버튼은 어떻게 값 갸져오나?!! -->
 								<tr>
-									<td><label for="r_yes">전공</label> <input id="r_yes"
-										type="radio" name="major" value="전공"> <label
-										for="r_no">비전공</label> <input id="r_no" type="radio"
-										name="major" value="비전공"></td>
+									<td><label for="r_yes">전공</label> <input
+										id="${applicant.r_yes}" type="radio" name="major" value="전공">
+										<label for="r_no">비전공</label> <input id="${applicant.r_no}"
+										type="radio" name="major" value="비전공"></td>
 								</tr>
 								<tr>
 									<td colspan="2">
 										<button class="btn" type="submit"
-											onclick="fn_submit(); return false;">등록</button>
-										<button class="btn" type="button" onclick="location='list'">조회</button>
+											onclick="fn_submit(); return false;">수정</button>
+										<button class="btn" type="button" onclick="location='list'">취소</button>
 									</td>
 								</tr>
 							</table>
@@ -72,6 +73,11 @@ request.setCharacterEncoding("UTF-8");
 			</div>
 		</div>
 	</div>
+	<script>
+	  <c:if test="${error != null}">
+	    alert("${error}");
+	  </c:if>
+	</script>
 	<div class="footer caveat">" WE ARE EVANS TRIO "</div>
 </body>
 </html>

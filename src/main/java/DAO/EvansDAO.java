@@ -12,102 +12,101 @@ import javax.servlet.http.HttpServletResponse;
 import DTO.Applicant;
 
 public class EvansDAO {
-	Connection conn = null;
-	PreparedStatement ps = null;
-	ResultSet rs = null;
-	
-	//데이터 베이스 연결
-	public static Connection getConnection() throws Exception {
-		Class.forName("oracle.jdbc.OracleDriver");
-		Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "test", "test1234");
-		return con;
-	}
-	
-	public String selectAll(HttpServletRequest request, HttpServletResponse response) {
-		ArrayList<Applicant> list = new ArrayList<Applicant>();
+
+	final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
+	final String JDBC_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+
+	public Connection open() {
+		Connection conn = null;
 		try {
-			conn = getConnection();
-			String sql = "select no, name, age, phone, address, instrument, career, major from applicant";
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			
-			while(rs.next()) {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(JDBC_URL, "test", "test1234");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+
+	public ArrayList<Applicant> getList() throws Exception {
+		Connection conn = open();
+		ArrayList<Applicant> list = new ArrayList<>();
+
+		String sql = "select no, name, age, phone, address, instrument, career, major from applicant";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+
+		try (conn; pstmt; rs) {
+			while (rs.next()) {
 				Applicant applicant = new Applicant();
 				applicant.setNo(rs.getInt(1));
-				applicant.setName(rs.getNString(2));
+				applicant.setName(rs.getString(2));
 				applicant.setAge(rs.getString(3));
 				applicant.setPhone(rs.getString(4));
-				applicant.setAddress(rs.getString(5));	
+				applicant.setAddress(rs.getString(5));
 				applicant.setInstrument(rs.getString(6));
 				applicant.setCareer(rs.getString(7));
 				applicant.setMajor(rs.getString(8));
-
 				list.add(applicant);
 			}
-			request.setAttribute("applylist", list);
-			
-			conn.close();
-			ps.close();
-			rs.close();
-		} catch(Exception e) {
-			e.printStackTrace();
+			return list;
 		}
-		return "applylist.jsp";
+
 	}
 	
-	public String insert(HttpServletRequest request,HttpServletResponse response) {
-		int applyno = Integer.parseInt(request.getParameter("applyno"));
-		String applyname = request.getParameter("applyname");
-		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
-		String instrument = request.getParameter("instrument");
-		String career = request.getParameter("career");
-		int result = 0;
+	public void insert(Applicant applicant) throws Exception {
+		Connection conn = open();
 		
-		try {
-			conn = getConnection(); //db 연결
-			String sql = "insert into applicant values(?,?,?,?,?,?,?)";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, applyno);
-			ps.setString(2, applyname);
-			ps.setString(3, phone);
-			ps.setString(4, address);
-			ps.setString(5, instrument);
-			ps.setString(6, career);
-			
-			result=ps.executeUpdate();
-			
-			System.out.println(result);
-			
-			conn.close();
-			ps.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+		String sql = "insert into applicant values(SEQ_applicant.nextval, ?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		try(conn; pstmt) {
+			pstmt.setString(1, applicant.getName());
+			pstmt.setString(2, applicant.getAge());
+			pstmt.setString(3, applicant.getPhone());
+			pstmt.setString(4, applicant.getAddress());
+			pstmt.setString(5, applicant.getInstrument());
+			pstmt.setString(6, applicant.getCareer());
+			pstmt.setString(7, applicant.getMajor());
+			pstmt.executeUpdate(); pstmt.executeUpdate();
 		}
-		return "apply.jsp";
+	}
+	
+	public void update(Applicant applicant) throws Exception {
+		Connection conn = open();
+		String sql = "update applicant set name=?, age=?, phone=?, address=?, instrument=?, career=?, major=? where no = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		try (conn; pstmt) {
+			pstmt.setString(1, applicant.getName());
+			pstmt.setString(2, applicant.getAge());
+			pstmt.setString(3, applicant.getPhone());
+			pstmt.setString(4, applicant.getAddress());
+			pstmt.setString(5, applicant.getInstrument());
+			pstmt.setString(6, applicant.getCareer());
+			pstmt.setString(7, applicant.getMajor());
+			
+			if (pstmt.executeUpdate() != 1) {
+				throw new Exception("DB에러");
+			}
+		}
 		
 	}
 	
-	public String nextApplyno(HttpServletRequest request,HttpServletResponse response) {
-		try {
-			conn = getConnection();
-			String sql = "select max(apply)+1 applyno from apply";
-			conn.prepareStatement(sql);
-			rs = ps.executeQuery();
+	public void delete(int no) throws Exception {
+		Connection conn = open();
+		
+		String sql = "delete from applicant where no=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		try(conn; pstmt) {
+			pstmt.setInt(1, no);
 			
-			int applyno = 0;
-			
-			if(rs.next()) applyno = rs.getInt(1);
-			request.setAttribute("applyno", applyno);
-			
-			conn.close();
-			ps.close();
-			rs.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+			if(pstmt.executeUpdate() !=1) {
+				throw new Exception("DB에러");
+			}
 		}
-		return "apply.jsp";
-	} 
+	}
+
 	
-	
+
 }
