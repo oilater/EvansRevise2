@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>\
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="./css/style.css" />
 </head>
 <body>
-
 	<div class="main-container">
 		<%@include file="header.jsp"%>
 		<div class="main-right">
@@ -44,8 +43,8 @@
 								<td>${applicant.instrument}</td>
 								<td>${applicant.career}</td>
 								<td>${applicant.major}</td>
-								<td><button class="revisebtn" name="revise" type="submit">수정</button>
-								<td><button class="failbtn" name="fail" type="submit">삭제</button>
+								<td><button class="revisebtn" name="revise" type="submit" onclick="send_form(${applicant.no})" >수정</button>
+								<td><button class="failbtn" name="fail" type="button" onclick="send_del(${applicant.no})"  >삭제</button>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -53,6 +52,24 @@
 			</div>
 		</div>
 	</div>
+	<form id="frm" method="post" action="viewupdate">
+		<input id="no" type="hidden" name="no" />
+	</form>
+	<form id="delfrm" method="post" action="B_delete">
+		<input id="del_no" type="hidden" name="no" />
+	</form>
 	<div class="footer caveat">" WE ARE EVANS TRIO "</div>
+	<script>
+		function send_form(val){
+			$('#no').val(val);
+			$('#frm').submit();
+		}
+		function send_del(val){
+			if(confirm('정말로 지울거야?')){
+				$('#del_no').val(val);
+				$('#delfrm').submit();
+			}
+		}
+	</script>
 </body>
 </html>

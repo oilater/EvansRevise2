@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-request.setCharacterEncoding("UTF-8");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +23,8 @@ request.setCharacterEncoding("UTF-8");
 						WELCOME TO<br> <span style="color: #8080ff;">EVANS
 							TRIO</span>
 					</div>
-					<form name="frm" method="post" action="B_update?no=${applicant.no}">
+					<form name="frm" method="post" action="B_update">
+						<input type="hidden" name="no" value="${applicant.no}" >
 						<div class="wrapper">
 							<table style="margin: 0 auto">
 								<tr>
@@ -54,10 +53,13 @@ request.setCharacterEncoding("UTF-8");
 								</tr>
 								<!--  라디오 버튼은 어떻게 값 갸져오나?!! -->
 								<tr>
-									<td><label for="r_yes">전공</label> <input
-										id="${applicant.r_yes}" type="radio" name="major" value="전공">
-										<label for="r_no">비전공</label> <input id="${applicant.r_no}"
-										type="radio" name="major" value="비전공"></td>
+								
+									<td><label for="r_yes">전공</label>
+										<input id="" type="radio" name="major" <c:if test="${applicant.major eq '전공' }">checked</c:if> value="전공" >
+										
+										<label for="r_no">비전공</label>
+										<input id="" type="radio" name="major" <c:if test="${applicant.major eq '비전공' }">checked</c:if> value="비전공">
+									</td>
 								</tr>
 								<tr>
 									<td colspan="2">

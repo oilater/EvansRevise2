@@ -24,9 +24,8 @@ public class EvansController extends HttpServlet {
 
 	public EvansController() {
 		super();
-
 	}
-
+	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -52,10 +51,6 @@ public class EvansController extends HttpServlet {
 		String command = request.getServletPath();
 		String site = null;
 
-		System.out.println("getContextPath:" + request.getContextPath());
-		System.out.println("getServletPath:" + request.getServletPath());
-		System.out.println("command:" + command);
-
 		switch (command) {
 		case "/home":
 			site = "index.jsp";
@@ -76,7 +71,7 @@ public class EvansController extends HttpServlet {
 		case "/B_insert":
 			site = B_insert(request);
 			break;
-
+		case "/viewupdate" : site = ModifyView(request); break;
 		case "/B_update":
 			site = update(request);
 			break;
@@ -116,6 +111,21 @@ public class EvansController extends HttpServlet {
 		}
 		return "list";
 	}
+	
+	public String ModifyView(HttpServletRequest request) {
+		
+		Applicant result; 
+		String no = request.getParameter("no");
+		try {
+			result = dao.Viewmodify(no);
+			request.setAttribute("applicant",result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ctx.log("추가 과정에서 오류 발생!"); 
+			request.setAttribute("error", "게시물이 정상적으로 등록되지 않았습니다!!");
+		}
+		return "edit.jsp";
+	}
 
 	public String update(HttpServletRequest request) {
 		Applicant applicant = new Applicant();
@@ -126,10 +136,10 @@ public class EvansController extends HttpServlet {
 			e.printStackTrace();
 			ctx.log("수정과정에서 문제 발생!");
 			request.setAttribute("error", "게시글이 정상적으로 수정되지 않았습니다");
-			return getList(request);
+			return "applylist.jsp";
 		}
 		// 오류뜨면 이 부분 확인해보기
-		return "redirect:/applylist?no=" + applicant.getNo();
+		return "list";
 	}
 
 	public String delete(HttpServletRequest request) {
@@ -142,7 +152,6 @@ public class EvansController extends HttpServlet {
 			request.setAttribute("error", "정상적으로 삭제되지 않았습니다!");
 			return getList(request);
 		}
-		return "redirect:/list";
+		return "list";
 	}
-
 }

@@ -50,7 +50,6 @@ public class EvansDAO {
 			}
 			return list;
 		}
-
 	}
 	
 	public void insert(Applicant applicant) throws Exception {
@@ -71,6 +70,32 @@ public class EvansDAO {
 		}
 	}
 	
+	
+	public Applicant Viewmodify(String no) throws Exception {
+		Connection conn = open();
+		Applicant ap = new Applicant();
+
+		String sql = "select no, name, age, phone, address, instrument, career, major from applicant where no = "+no;
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+
+		try (conn; pstmt; rs) {
+			if (rs.next()) {
+				ap.setNo(rs.getInt(1));
+				ap.setName(rs.getString(2));
+				ap.setAge(rs.getString(3));
+				ap.setPhone(rs.getString(4));
+				ap.setAddress(rs.getString(5));
+				ap.setInstrument(rs.getString(6));
+				ap.setCareer(rs.getString(7));
+				ap.setMajor(rs.getString(8));
+				
+			}
+			return ap;
+		}
+	}
+	
+	
 	public void update(Applicant applicant) throws Exception {
 		Connection conn = open();
 		String sql = "update applicant set name=?, age=?, phone=?, address=?, instrument=?, career=?, major=? where no = ?";
@@ -84,7 +109,7 @@ public class EvansDAO {
 			pstmt.setString(5, applicant.getInstrument());
 			pstmt.setString(6, applicant.getCareer());
 			pstmt.setString(7, applicant.getMajor());
-			
+			pstmt.setInt(8, applicant.getNo());		
 			if (pstmt.executeUpdate() != 1) {
 				throw new Exception("DB에러");
 			}
